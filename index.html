@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Топ демонов</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #000;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        header {
+            width: 100%;
+            background-color: #111;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        
+        .nav-button {
+            background-color: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+            padding: 12px 24px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-button:hover {
+            background-color: #fff;
+            color: #000;
+        }
+        
+        .nav-button.locked {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        
+        .nav-button.locked::after {
+            content: '🔒';
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+        }
+        
+        .main-content {
+            max-width: 1000px;
+            width: 90%;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #111;
+            border-radius: 20px;
+            box-shadow: 0 8px 24px rgba(255, 255, 255, 0.05);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 42px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+        }
+        
+        h1::after {
+            content: '';
+            display: block;
+            width: 150px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #fff, transparent);
+            margin: 15px auto 0;
+        }
+        
+        .demon-list {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .demon-card {
+            background: linear-gradient(145deg, #1a1a1a, #222);
+            border-radius: 15px;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease;
+            border: 1px solid #333;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .demon-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+        }
+        
+        .demon-rank {
+            font-size: 32px;
+            font-weight: bold;
+            margin-right: 30px;
+            min-width: 60px;
+            text-align: center;
+            color: #ccc;
+        }
+        
+        .demon-rank.top1 {
+            color: #fff;
+            text-shadow: 0 0 10px #fff, 0 0 20px #fff;
+        }
+        
+        .demon-rank.top2 {
+            color: #ddd;
+            text-shadow: 0 0 8px #ddd;
+        }
+        
+        .demon-rank.top3 {
+            color: #bbb;
+            text-shadow: 0 0 5px #bbb;
+        }
+        
+        .demon-info {
+            flex-grow: 1;
+        }
+        
+        .demon-name {
+            font-size: 28px;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        
+        .demon-difficulty {
+            font-size: 16px;
+            color: #aaa;
+        }
+        
+        .demon-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, #fff, #aaa);
+        }
+        
+        .top1::before {
+            background: linear-gradient(to bottom, #fff, #fff);
+        }
+        
+        .top2::before {
+            background: linear-gradient(to bottom, #ddd, #999);
+        }
+        
+        .top3::before {
+            background: linear-gradient(to bottom, #bbb, #777);
+        }
+        
+        footer {
+            margin-top: auto;
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+            background-color: #111;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid #333;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .demon-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .demon-rank {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <button class="nav-button active">ТОП демонов</button>
+            <button class="nav-button locked">Модераторы сайта</button>
+           <button class="nav-button" onclick="window.location.href='players.html'">Топ игроков</button>
+            <button class="nav-button">Топ Лайаутов</button>
+        </div>
+    </header>
+    
+    <div class="main-content">
+        <h1>Топ демонов</h1>
+        
+        <div class="demon-list">
+            <div class="demon-card top1">
+                <div class="demon-rank top1">1</div>
+                <div class="demon-info">
+                    <h2 class="demon-name">SUDNO</h2>
+                    <p class="demon-difficulty">Сложность: ★★★★★</p>
+                </div>
+            </div>
+            
+            <div class="demon-card top2">
+                <div class="demon-rank top2">2</div>
+                <div class="demon-info">
+                    <h2 class="demon-name">FLY AWAY</h2>
+                    <p class="demon-difficulty">Сложность: ★★★★☆</p>
+                </div>
+            </div>
+            
+            <div class="demon-card top3">
+                <div class="demon-rank top3">3</div>
+                <div class="demon-info">
+                    <h2 class="demon-name">ICY</h2>
+                    <p class="demon-difficulty">Сложность: ★★★☆☆</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        © Чо то
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Обработка навигационных кнопок
+            const navButtons = document.querySelectorAll('.nav-button:not(.locked)');
+            
+            navButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Удаляем активный класс у всех кнопок
+                    navButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Добавляем активный класс текущей кнопке
+                    this.classList.add('active');
+                    
+                    // Здесь можно добавить логику загрузки соответствующего контента
+                    console.log(`Загружаем: ${this.textContent}`);
+                });
+            });
+            
+            // Анимация при загрузке
+            const demonCards = document.querySelectorAll('.demon-card');
+            demonCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 200 * index);
+            });
+            
+            // Запрещаем действие для заблокированной кнопки
+            const lockedButton = document.querySelector('.nav-button.locked');
+            lockedButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Доступ ограничен. Так как эта функция еще не доступна. Ожидайте обновлений.');
+            });
+        });
+    </script>
+</body>
+</html>
